@@ -17,7 +17,6 @@ const checkUserId = (id) => {
 		throw error
 	}
 }
-
 export const getAllTodos = async (currentUser, query) => {
 	const filters = {}
 

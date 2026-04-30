@@ -101,7 +101,7 @@ export const deleteUser = async (id) => {
 }
 
 
-export const register = async (data) => {
+export const register = async (data) => {	
 	const { name, email, password, age, role } = data
 
 	const existingUser = await userRepository.findUserByEmail(email)
