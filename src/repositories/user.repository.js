@@ -1,23 +1,27 @@
-import User from "../models/user.model.js"
+import { AppDataSource } from "../config/db.js";
+import { UserEntity } from "../entities/UserEntity.js";
 
-export const findAllUsers = async (filters, page, limit) => {
-	const skip = (page - 1) * limit
+const userRepository = AppDataSource.getRepository(UserEntity);
 
-	return User.find(filters).skip(skip).limit(limit)
-}
+export const findAllUsers = async () => {
+  return await userRepository.find({
+    order: { id: "DESC" }
+  });
+};
 
 export const findUserById = async (id) => {
-	return User.findById(id)
-}
+  return await userRepository.findOneBy({ id });
+};
 
-export const findUserByEmail = async (email) => {
-	return User.findOne({ email })
-}
-
-export const createUser = async (data) => {
-	return User.create(data)
-}
+export const createUser = async (userData) => {
+  const newUser = userRepository.create(userData);
+  return await userRepository.save(newUser);
+};
 
 export const deleteUserById = async (id) => {
-	return User.findByIdAndDelete(id)
-}
+  const userToDelete = await userRepository.findOneBy({ id });
+  if (userToDelete) {
+    return await userRepository.remove(userToDelete);
+  }
+  return null;
+};
