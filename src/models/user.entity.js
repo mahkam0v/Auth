@@ -7,7 +7,7 @@ export const UserEntity = new EntitySchema({
     id: {
       type: "int",
       primary: true,
-      generated: true, // avtomatik o'suvchi PK
+      generated: true,
     },
     name: {
       type: "varchar",
